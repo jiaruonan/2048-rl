@@ -146,14 +146,17 @@ class Test2048Logic():
         assert game.isend() == True
 
 
-# # play with 2048Game
-# game = Game2048Env()
-# observation, reward, done, info = game.step(2)
-# # game.render()
-# game.step(1)
-# # game.render()
-# game.step(2)
-# # game.render()
-# game.step(1)
-# # game.render()
-# game.close()
+# if __name__ == "__main__":
+#     # play with 2048Game
+#     # import pdb; pdb.set_trace()
+#     game = Game2048Env()
+#     observation, reward, done, info = game.step(2)
+#     print(observation)
+#     # game.render()
+#     game.step(1)
+#     # game.render()
+#     game.step(2)
+#     # game.render()
+#     game.step(1)
+#     # game.render()
+#     game.close()
