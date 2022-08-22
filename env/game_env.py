@@ -259,4 +259,4 @@ class Game2048Env(gym.Env):
 
     def set_board(self, new_board):
         """Set the whole board-matrix, useful for testing."""
-        self.Matrix =new_board
+        self.Matrix = new_board

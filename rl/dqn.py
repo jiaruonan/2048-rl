@@ -11,10 +11,11 @@ import torch.optim as optim
 import torch.nn.functional as F
 from env.game_env import Game2048Env
 from utils.hyperparameters import Config
+from utils.render_episode import RenderEpisode
 
 
 config = Config()
-config.MAX_FRAMES = int(1e8)
+config.MAX_FRAMES = int(1e5)
 config.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
@@ -181,10 +182,14 @@ def main():
     env = Game2048Env()
     agent = DQN(env=env, config=config)
 
+    render_episode = RenderEpisode(env=env)
+
     episode = 0
     episode_reward = 0
     obs = env.reset()
     obs = obs.reshape(-1)  ## like mujoco
+
+    render_episode.append_episode_state()
 
     time_start = time.time()
 
@@ -197,13 +202,22 @@ def main():
         # next_obs = None if done else next_obs  # todo: this is normal
         next_obs = next_obs.reshape(-1)
 
+        render_episode.append_episode_state()
+
         agent.step_learn(obs, action, reward, next_obs, frame_idx)
         episode_reward += reward
 
         if done:
             episode += 1
+
+            if episode % 10 == 0:
+                render_episode.show_episode()
+            else:
+                render_episode.reset_episode()
+
             agent.episode_highest_tiles.append(env.highest())
             print('episode:', episode, 'highest tile:', env.highest())
+
             obs = env.reset()
             obs = obs.reshape(-1)
             agent.save_episode_reward(episode_reward)

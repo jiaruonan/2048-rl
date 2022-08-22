@@ -18,7 +18,7 @@ class Config(object):
         #memory
         self.TARGET_NET_UPDATE_FREQ = 1000
         self.REPLAY_BUFFER_SIZE = 100000
-        self.BATCH_SIZE = 32
+        self.BATCH_SIZE = 512
         self.PRIORITY_ALPHA=0.6
         self.PRIORITY_BETA_START=0.4
         self.PRIORITY_BETA_FRAMES = 100000
